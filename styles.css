@@ -1,0 +1,269 @@
+/* CSS - styles.css */
+body, html {
+    height: 100%;
+    margin: 0;
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap; /* Allows items to wrap as needed */
+}
+
+@keyframes flicker {
+    0% {
+        opacity: 1; /* Fully visible */
+    }
+    100% {
+        opacity: 0.8; /* Fully invisible */
+    }
+}
+@keyframes lessflicker {
+    0% {
+        opacity: 0.8; /* Fully visible */
+    }
+    100% {
+        opacity: 0.6; /* Fully invisible */
+    }
+    
+
+}
+
+@keyframes turnonflicker {
+    0% {
+        opacity: 0; /* Fully visible */
+    }
+    25% {
+        opacity: 1; /* Fully invisible */
+    }
+    50%{
+        opacity: 0;
+    }
+    100% {
+        opacity: 2;
+    }
+}
+
+@keyframes bobbing {
+    0%, 100% {
+        transform: translateY(0); /* Initial and final position */
+    }
+    50% {
+        transform: translateY(-100px); /* Middle position, adjust the distance as needed */
+    }
+}
+@keyframes fade-in-fade-out {
+    0% {
+        opacity: 0; /* Start with opacity 0 */
+    }
+    10% {
+        opacity: 0; /* Stay at opacity 0 for the first 10% (2 seconds) */
+    }
+    11% {
+        opacity: 0.6; /* Instantly flash to opacity 1 */
+    }
+    13% {
+        opacity: 0;
+    }
+    13% {
+        opacity: 1;
+    }
+    14% {
+        opacity: 0
+    }
+    35% {
+        opacity: 1; /* Stay at opacity 1 for the first half */
+    }
+    71% {
+        opacity: 1; /* Begin fading out from opacity 1 to 0 */
+    }
+    100% {
+        opacity: 0; /* End with opacity 0 */
+    }
+}
+
+@keyframes delay-in-fade-out {
+    0% {
+        opacity: 0; /* Start with opacity 0 */
+    }
+    10% {
+        opacity: 0; /* Stay at opacity 0 for the first 10% (2 seconds) */
+    }
+    11% {
+        opacity: 0.1; /* Instantly flash to opacity 1 */
+    }
+    13% {
+        opacity: 0;
+    }
+    13% {
+        opacity: 0.2;
+    }
+    14% {
+        opacity: 0
+    }
+    35% {
+        opacity: 0.8; /* Stay at opacity 1 for the first half */
+    }
+    71% {
+        opacity: 1; /* Begin fading out from opacity 1 to 0 */
+    }
+    100% {
+        opacity: 0; /* End with opacity 0 */
+    }
+}
+
+
+.tv-container {
+    position: relative;
+    width: 450px; /* Adjust based on your TV image size */
+    margin: 50px; /* Adjust margin to control spacing between TVs */
+    z-index: 2; /* Standard z-index for TV containers */
+}
+
+/* Ensuring the glow effect is properly scaled and positioned */
+.tv-glow {
+    mix-blend-mode: screen;
+    opacity: 0.8; /* Adjust for desired intensity */
+    z-index: 7; /* Highest to ensure it's on top of everything */
+    position: fixed; /* Use 'fixed' to break out of the container if needed */
+    top: 50%;
+    left: 50%;
+    transform: translate(-0%, -0) scale(3); /* Adjust scale to ensure glow extends beyond the TV */
+    width: 3000px; /* Adjust based on the original size of your glow image */
+    height: auto; /* Maintains aspect ratio */
+    transform-origin: center center;
+}
+
+.offtv-glow {
+    mix-blend-mode: screen;
+    opacity: 0.6; /* Adjust for desired intensity */
+    z-index: 10; /* Highest to ensure it's on top of everything */
+    position: fixed; /* Use 'fixed' to break out of the container if needed */
+    top: 50%;
+    opacity: 0;
+    left: 50%;
+    transform: translate(-0%, -0) scale(3); /* Adjust scale to ensure glow extends beyond the TV */
+    width: 3000px; /* Adjust based on the original size of your glow image */
+    height: auto; /* Maintains aspect ratio */
+    transform-origin: center center;
+    animation-name: delay-in-fade-out, lessflicker;
+    animation-duration: 10s, 0.03s;
+    animation-delay: 6s, 9.0s;
+    animation-iteration-count: 1, 150;
+}
+
+/* Adjusting other elements */
+.tv-container img, .tv-reflections, .tv-crt-texture, .above-crt-image {
+    position: absolute;
+    width: 100%;
+    height: auto;
+    top: 0;
+    left: 0;
+}
+
+/* Reflections and other effects */
+.tv-reflections {
+    mix-blend-mode: screen;
+    opacity: 1;
+    z-index: 6; /* Set a lower z-index to position below CRT texture */
+}
+
+.tv-container .tv-crt-texture {
+    z-index: 5; /* Set a lower z-index to position below the "put above CRT" image */
+    mix-blend-mode: soft-light; /* Corrected blend mode */
+    opacity: 1; /* Full opacity, adjust as needed */
+}
+
+.above-crt-image {
+    mix-blend-mode: normal; /* Use normal blend mode */
+    opacity: 0.2; /* Set opacity to 20% */
+    z-index: 4; /* Set a lower z-index to position below reflections */
+}
+
+/* Ensure the "off-tv" container is above everything in the "on-tv" container */
+.off-tv {
+    z-index: 9;
+}
+
+.off-tv .tv-frame.off {
+    filter: brightness(0.75);
+}
+
+/* Create a class for the glow effect */
+
+.tv-container.on-tv .tv-screen.on {
+    animation: flicker 0.05s infinite alternate;
+}
+
+.off-tv .tv-screen.on {
+    opacity: 0;
+    position: absolute;
+    animation-name: fade-in-fade-out, flicker;
+    animation-duration: 10s, 0.03s;
+    animation-delay: 6s, 9.0s;
+    animation-iteration-count: infinite, 150;
+
+}
+
+.tv-crt-texture {
+    opacity: 0;
+    position: absolute;
+    animation-name: fade-in-fade-out;
+    animation-duration: 10s,;
+    animation-iteration-count: 1;
+}
+
+.tv-above-crt-on {
+    mix-blend-mode: normal;
+    opacity: 30%;
+    z-index: 5
+}
+------------
+
+
+
+
+
+.fourth-tv .newtv-frame.off {
+    opacity: 0.5;
+    z-index: 5;
+}
+
+.fourth-tv .newtv-screen-off {
+    opacity: 1;
+    z-index: 1;
+}
+
+.fourth-tv .newtv-screen.on {
+    opacity: 0;
+    z-index: 2;
+}
+
+.fourth-tv .newtv-crt-texture {
+    opacity: 0;
+    mix-blend-mode: soft-light;
+    z-index: 3;
+}
+
+/* Adjust the class name here */
+.fourth-tv .newtv-above-crt-on {
+    opacity: 0; /* Set it to 0.5 opacity */
+    mix-blend-mode: soft-light;
+    z-index: 4;
+}
+
+.fourth-tv .newtv-frame-on {
+    opacity: 0;
+    z-index: 4;
+}
+
+.fourth-tv .newtv-reflections {
+    opacity: 1;
+    mix-blend-mode: screen;
+    z-index: 5;
+}
+
+.fourth-tv .newtv-glow {
+    opacity: 0;
+    mix-blend-mode: screen;
+    z-index: 6;
+}

@@ -1,0 +1,48 @@
+body, html {
+    height: 100%;
+    margin: 0;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.tv-container {
+    position: relative;
+    width: 100px; /* Adjust based on actual TV size */
+}
+
+.tv-container img {
+    position: absolute;
+    width: 100%;
+    height: auto;
+    top: 0;
+    left: 0;
+    display: none; /* Initially hide all images */
+}
+
+.tv-container img.off { /* Only the off screen and frame are visible initially */
+    display: block;
+}
+
+.tv-container:hover img.on,
+.tv-container:hover .tv-reflections,
+.tv-container:hover .tv-glow,
+.tv-container:hover .tv-crt-texture { /* On hover, display the on images and effects */
+    display: block;
+}
+
+.tv-container .tv-reflections { /* Reflections are always visible, even when the TV is off */
+    display: block;
+    mix-blend-mode: screen;
+    opacity: 0.5; /* Adjust opacity as needed for the reflections */
+}
+
+/* Adjust opacity for glow and CRT texture when the TV is on */
+.tv-container:hover .tv-glow {
+    opacity: 0.8; /* Adjust as necessary */
+}
+
+.tv-container:hover .tv-crt-texture {
+    opacity: 0.5; /* Adjust as necessary */
+}
